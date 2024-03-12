@@ -12,6 +12,10 @@ char cFruta = 'O';
 char cCabeza = 'X';
 const char xMargen = '|';
 const char yMargen = '-';
+short sPuntuacion;
+
+
+short sDireccion = 0; // 1 Arriba, 2 Abajo, 3 izquierda, 4 Derecha
 //Funcion para crear e imprimir el tablero
 void fTablero(char cTablero[iFilas][iColumnas]) {
 	//Declaracion de variables
@@ -53,25 +57,46 @@ void fMostrar_Tablero(char cTablero[iFilas][iColumnas]) {
 void fMovimiento(char cTablero[iFilas][iColumnas], bool bGameOver) {
 	if (IsWPressed())
 	{ 
+		sDireccion = 1;
 		xCabeza--;
 	}
 	else if (IsSPressed())
 	{ 
+		sDireccion = 2;
 		xCabeza++;
-		
 	}
 	else if (IsAPressed())
 	{
+		sDireccion = 3;
 		yCabeza--;
 	}
 	else if (IsDPressed())
 	{
+		sDireccion = 4;
 		yCabeza++;
-
 	} 
 	else
 	{
-
+		switch (sDireccion)
+		{
+		case 1:
+			xCabeza--;
+			break;
+		case 2:
+			xCabeza++;
+			break;
+		case 3:
+			yCabeza--;
+			break;
+		case 4:
+			yCabeza++;
+			break;
+		}
+	}
+	if (cTablero[xCabeza][yCabeza] == xMargen || cTablero[xCabeza][yCabeza] == yMargen)
+	{
+		cout << "Game Over!!!";
+		bGameOver = true;
 	}
 
 	for (int i = xCabeza; i < sContador; ++i)
@@ -81,7 +106,6 @@ void fMovimiento(char cTablero[iFilas][iColumnas], bool bGameOver) {
 			
 		}
 	}
-
 
 	if (cTablero[xCabeza][yCabeza] == cFruta)
 	{
