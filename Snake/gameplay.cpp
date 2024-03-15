@@ -1,15 +1,20 @@
 #include <iostream>
 #include "keyboard.h"
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
+srand(static_cast<unsigned>(time(nullptr)));  // Semilla de srand
+
 #define iFilas 10
 #define iColumnas 20
-
-//Variables Globales
 int xCabeza = 5;    
 int yCabeza = 10;
 short sContador = 0;
 char cFruta = 'O';
 char cCabeza = 'X';
+char cCuerpo;
 const char xMargen = '|';
 const char yMargen = '-';
 short sPuntuacion;
@@ -54,63 +59,92 @@ void fMostrar_Tablero(char cTablero[iFilas][iColumnas]) {
 	}
 }
 
-void fMovimiento(char cTablero[iFilas][iColumnas], bool bGameOver) {
-	if (IsWPressed())
-	{ 
-		sDireccion = 1;
-		xCabeza--;
+void fMovimiento(char cTablero[iFilas][iColumnas], bool* pGameOver) {
+	if (IsWPressed()) {
+		if (xCabeza - 1 < 0 || cTablero[xCabeza - 1][yCabeza] == xMargen) {
+			cout << "Game Over!!!\n";
+			*pGameOver = true;
+		}
+		else {
+			xCabeza--;
+			sDireccion = 1;
+		}
 	}
-	else if (IsSPressed())
-	{ 
-		sDireccion = 2;
-		xCabeza++;
+	else if (IsSPressed()) {
+		if (xCabeza + 1 >= iFilas || cTablero[xCabeza + 1][yCabeza] == xMargen) {
+			cout << "Game Over!!!\n";
+			*pGameOver = true;
+		}
+		else {
+			xCabeza++;
+			sDireccion = 2;
+		}
 	}
-	else if (IsAPressed())
-	{
-		sDireccion = 3;
-		yCabeza--;
+	else if (IsAPressed()) {
+		if (yCabeza - 1 < 0 || cTablero[xCabeza][yCabeza - 1] == yMargen) {
+			cout << "Game Over!!!\n";
+			*pGameOver = true;
+		}
+		else {
+			yCabeza--;
+			sDireccion = 3;
+		}
 	}
-	else if (IsDPressed())
-	{
-		sDireccion = 4;
-		yCabeza++;
-	} 
+	else if (IsDPressed()) {
+		if (yCabeza + 1 >= iColumnas || cTablero[xCabeza][yCabeza + 1] == yMargen) {
+			cout << "Game Over!!!\n";
+			*pGameOver = true;
+		}
+		else {
+			yCabeza++;
+			sDireccion = 4;
+		}
+	}
 	else
 	{
 		switch (sDireccion)
 		{
 		case 1:
-			xCabeza--;
+			if (xCabeza - 1 < 0 || cTablero[xCabeza - 1][yCabeza] == xMargen) {
+				cout << "Game Over!!!\n";
+				*pGameOver = true;
+			}
+			else {
+				xCabeza--;
+			}
 			break;
 		case 2:
-			xCabeza++;
+			if (xCabeza + 1 >= iFilas || cTablero[xCabeza + 1][yCabeza] == xMargen) {
+				cout << "Game Over!!!\n";
+				*pGameOver = true;
+			}
+			else {
+				xCabeza++;
+			}
 			break;
 		case 3:
-			yCabeza--;
+			if (yCabeza - 1 < 0 || cTablero[xCabeza][yCabeza - 1] == yMargen) {
+				cout << "Game Over!!!\n";
+				*pGameOver = true;
+			}
+			else {
+				yCabeza--;
+			}
 			break;
 		case 4:
-			yCabeza++;
+			if (yCabeza + 1 >= iColumnas || cTablero[xCabeza][yCabeza + 1] == yMargen) {
+				cout << "Game Over!!!\n";
+				*pGameOver = true;
+			}
+			else {
+				yCabeza++;
+			}
 			break;
 		}
 	}
-	if (cTablero[xCabeza][yCabeza] == xMargen || cTablero[xCabeza][yCabeza] == yMargen)
-	{
-		cout << "Game Over!!!";
-		bGameOver = true;
-	}
-
-	for (int i = xCabeza; i < sContador; ++i)
-	{
-		for (int j = yCabeza; j < sContador; ++j)
-		{
-			
-		}
-	}
-
-	if (cTablero[xCabeza][yCabeza] == cFruta)
-	{
-		sContador++;
-
-	}
 }
+
+
+
+
 

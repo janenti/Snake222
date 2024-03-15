@@ -21,7 +21,7 @@ int main() {
 
         system("cls"); 
         fTablero(cTablero); 
-        fMovimiento(cTablero, bGameOver );
+        fMovimiento(cTablero, pGameover);
         fMostrar_Tablero(cTablero);  
         //Sleep main thread to control game speed execution
         std::this_thread::sleep_for(std::chrono::milliseconds(FRAME_RATE));  
